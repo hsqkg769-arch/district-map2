@@ -80,7 +80,7 @@ def load_data():
         pass
 
     # 人口データ
-    df_pop = pd.read_csv("jinko2018_2025.csv", encoding="shift_jis")
+    df_pop = pd.read_csv(BASE_DIR / "jinko2018_2025.csv", encoding="shift_jis")
     df_pop.columns = [c.strip() for c in df_pop.columns]
 
     if "pop_0_11" not in df_pop.columns:

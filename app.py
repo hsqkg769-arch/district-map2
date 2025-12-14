@@ -1,11 +1,18 @@
 import streamlit as st
 import pandas as pd
 import geopandas as gpd
+from pathlib import Path
+
+BASE_DIR = Path(__file__).parent
+DATA_DIR = BASE_DIR / "data"
+
 import folium
 from streamlit_folium import st_folium
 from statsmodels.tsa.statespace.structural import UnobservedComponents
 import altair as alt
 from shapely.geometry import Point
+
+
 
 # ------------------------------------------------------
 # ページ設定
@@ -147,9 +154,9 @@ else:
 # サイドバー：レイヤー表示切り替え
 # ------------------------------------------------------
 st.sidebar.header("Layer visibility")
-show_district = st.sidebar.checkbox("人口・学区ポリゴン", value=True)
-show_school   = st.sidebar.checkbox("学校ポイント", value=True)
-show_bear     = st.sidebar.checkbox("熊出没ポイント", value=True)
+show_district = st.sidebar.checkbox("Population pl", value=True)
+show_school   = st.sidebar.checkbox("School pt", value=True)
+show_bear     = st.sidebar.checkbox("Bear information pt", value=True)
 # 今回は地価はモデル側で利用が主なので、地図レイヤーとしては後回し
 
 # ------------------------------------------------------
@@ -196,38 +203,46 @@ tooltip = folium.GeoJsonTooltip(
     aliases=["District (JP)", "District (EN)", "Trend", "Pop 2025", "Pop 2030"],
 )
 
-# 学区ポリゴン
+# 学区ポリゴン（外線だけ薄いグレー）
 if show_district:
     folium.GeoJson(
         gdf,
         name="districts",
-        style_function=style_func,
+        style_function=lambda feature: {
+            **style_func(feature),   # ← 既存の塗り（熊リスクなど）を維持
+            "color": "#cccccc",      # ← 外線：薄いグレー
+            "weight": 1,             # ← 細めの線
+            "opacity": 0.6,          # ← 控えめ
+        },
         tooltip=tooltip,
     ).add_to(m)
 
-# 学校ポイント：ピクトグラム風（緑の学校マーク）
+
+
+
+# 学校ポイント：四角（■）
 if show_school:
     for _, row in school_pt.iterrows():
         name = row[SCHOOL_NAME_COL]
         gakku = row.get("gakku", "")
         sid = row.get("ID", "")
 
-        # 「附属（other）」など区別したい場合はここで条件分岐
-        icon = folium.Icon(
-            icon="graduation-cap",  # 学校のピクトグラム風
-            prefix="fa",
-            color="green",          # ピンの色
-            icon_color="white",     # アイコン色
-        )
-
-        folium.Marker(
+        folium.RegularPolygonMarker(
             location=[row.geometry.y, row.geometry.x],
-            icon=icon,
+            number_of_sides=4,        # ← 四角
+            radius=6,                # 大きさ（5〜7推奨）
+            rotation=45,             # 45度で「■」らしく
+            color=None,              # 外枠なし
+            fill=True,
+            fill_color="green",      # 学校＝緑
+            fill_opacity=0.9,
             popup=folium.Popup(
                 f"<b>{name}</b><br>ID: {sid}<br>Gakku: {gakku}",
                 max_width=250,
             ),
         ).add_to(m)
+
+
 
 # 熊ポイント：年ごとに色を変える
 if show_bear and not bear_pt.empty:
@@ -243,11 +258,11 @@ if show_bear and not bear_pt.empty:
         gakku = row.get("gakku", "")
         folium.CircleMarker(
             location=[row.geometry.y, row.geometry.x],
-            radius=6,
+            radius=3,
             color=color,
             fill=True,
             fill_color=color,
-            fill_opacity=0.8,
+            fill_opacity=0.7,
             popup=folium.Popup(
                 f"<b>Year:</b> {year}<br><b>Gakku:</b> {gakku}<br><b>Memo:</b> {memo}",
                 max_width=300,

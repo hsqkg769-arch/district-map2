@@ -113,7 +113,7 @@ def load_data():
     df_pop["ID"] = df_pop["ID"].astype(str)
 
     # 生徒数データ
-    df_school = pd.read_csv("school.csv", encoding="utf-8-sig")
+    df_school = pd.read_csv(DATA_DIR / "school.csv", encoding="utf-8-sig")
     df_school.columns = [c.strip() for c in df_school.columns]
     df_school = df_school.rename(columns={"enroll_total": "students"})
     df_school["ID"] = df_school["ID"].astype(str)
@@ -125,7 +125,7 @@ def load_data():
 
     # 公示価格（モデル・属性用に学区平均だけ作る）
     try:
-        df_chika = pd.read_csv("chika2.csv", encoding="utf-8-sig")
+        df_chika = pd.read_csv(DATA_DIR / "chika2.csv", encoding="utf-8-sig")
         df_chika.columns = [c.strip() for c in df_chika.columns]
         df_chika["ID"] = df_chika["ID"].astype(str)
 

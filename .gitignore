@@ -1,0 +1,8 @@
+﻿.venv/
+*.pptx
+~$*.pptx
+*.qmd
+github.txt
+*.txt
+__pycache__/
+*.pyc

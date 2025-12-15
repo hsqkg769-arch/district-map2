@@ -19,6 +19,22 @@ from statsmodels.tsa.statespace.structural import UnobservedComponents
 import altair as alt
 from shapely.geometry import Point
 
+REQUIRED = [
+    "gakku_trend.geojson",
+    "jinko2018_2025.csv",
+    "school.csv",
+    "schoolPT.shp", "schoolPT.dbf", "schoolPT.shx", "schoolPT.prj",
+    "bearPT.shp", "bearPT.dbf", "bearPT.shx", "bearPT.prj",
+]
+
+def require_files():
+    missing = [f for f in REQUIRED if not (DATA_DIR / f).exists()]
+    if missing:
+        st.error("不足ファイル: " + ", ".join(missing))
+        st.write("DATA_DIR:", DATA_DIR)
+        st.write("data内:", sorted([p.name for p in DATA_DIR.glob('*')]))
+        st.stop()
+
 
 
 # ------------------------------------------------------
@@ -80,14 +96,14 @@ def categorize_school_risk(students_2030: float) -> str:
 @st.cache_data
 def load_data():
     # 学区ポリゴン
-    gdf = gpd.read_file("gakku_trend.geojson")
+    gdf = gpd.read_file(DATA_DIR / "gakku_trend.geojson")
     try:
         gdf = gdf.to_crs(epsg=4326)
     except Exception:
         pass
 
     # 人口データ
-    df_pop = pd.read_csv(BASE_DIR / "jinko2018_2025.csv", encoding="shift_jis")
+    df_pop = pd.read_csv(DATA_DIR / "jinko2018_2025.csv", encoding="shift_jis")
     df_pop.columns = [c.strip() for c in df_pop.columns]
 
     if "pop_0_11" not in df_pop.columns:
@@ -104,7 +120,7 @@ def load_data():
     df_school["fiscal year"] = df_school["fiscal year"].astype(int)
 
     # 学校ポイント
-    school_pt = gpd.read_file("schoolPT.shp")
+    school_pt = gpd.read_file(DATA_DIR / "schoolPT.shp")
     school_pt = school_pt.to_crs(epsg=4326)
 
     # 公示価格（モデル・属性用に学区平均だけ作る）
@@ -136,7 +152,7 @@ def load_data():
 
     # 熊ポイント
     try:
-        bear_pt = gpd.read_file("bearPT.shp")
+        bear_pt = gpd.read_file(DATA_DIR / "bearPT.shp")
         bear_pt = bear_pt.to_crs(epsg=4326)
         # year を int に
         bear_pt["year"] = bear_pt["year"].astype(int)

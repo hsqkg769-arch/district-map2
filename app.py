@@ -6,6 +6,13 @@ from pathlib import Path
 BASE_DIR = Path(__file__).parent
 DATA_DIR = BASE_DIR / "data"
 
+# ------------------------------------------------------
+# GitHub raw URLs（Publicなので直接読める）
+# ------------------------------------------------------
+CSV_URL_POP = "https://raw.githubusercontent.com/hsqkg769-arch/district-map2/main/jinko2018_2025.csv"
+GEOJSON_URL_GAKKU = "https://raw.githubusercontent.com/hsqkg769-arch/district-map2/main/gakku_trend.geojson"
+
+
 import folium
 from streamlit_folium import st_folium
 from statsmodels.tsa.statespace.structural import UnobservedComponents

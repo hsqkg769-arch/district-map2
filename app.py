@@ -69,7 +69,7 @@ def pick_col_by_candidates(columns, candidates, fallback_index=None):
 # ======================================================
 # Columns
 # ======================================================
-GAKKU_COL = "gakku"   # district key (English)
+GAKKU_COL = "gakkuNo"   # district key (English)
 ID_COL = "ID"
 
 # population columns (your csv should have these)
@@ -885,7 +885,7 @@ if color_by in ["総人口（2025）", "将来推計（2030 0–11）"]:
             }
 
 # --- tooltip (keep simple, English)
-tooltip_fields = [GAKKU_COL]
+tooltip_fields = [GAKKU_COL] if GAKKU_COL in gdf.columns else []
 tooltip_aliases = ["gakku"]
 for f, a in [
     ("pop_total", "pop_total"),

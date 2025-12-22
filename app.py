@@ -885,11 +885,13 @@ if color_by in ["総人口（2025）", "将来推計（2030 0–11）"]:
             }
 
 # --- tooltip (keep simple, English)
+# Use gdf2 (merged data) for tooltip fields, but only include columns that exist
 tooltip_fields = []
 tooltip_aliases = []
 if GAKKU_COL in gdf.columns:
     tooltip_fields.append(GAKKU_COL)
     tooltip_aliases.append("gakku")
+# Only add columns that actually exist in gdf
 for f, a in [
     ("pop_total", "pop_total"),
     ("pop_0_11", "pop_0_11"),

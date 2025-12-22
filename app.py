@@ -746,7 +746,11 @@ left, right = st.columns([0.44, 0.56], gap="large")
 # ======================================================
 # State: selected gakku (by click only)
 # ======================================================
-all_gakku = sorted([g for g in gdf[GAKKU_COL].dropna().unique().tolist()])
+if GAKKU_COL in gdf.columns and not gdf.empty:
+    all_gakku = sorted([g for g in gdf[GAKKU_COL].dropna().unique().tolist()])
+else:
+    all_gakku = []
+    st.error(f"Error: '{GAKKU_COL}' column not found in district shapefile. Available columns: {list(gdf.columns) if not gdf.empty else 'No data'}")
 selected_gakku = all_gakku[0] if all_gakku else None  # Initialize with first gakku
 
 with left:
@@ -1097,14 +1101,17 @@ with left:
         st.markdown(f"### Selected gakku: `{selected_gakku}`")
 
         # latest pop row
-        pop_latest_row = (
-            gdf[gdf[GAKKU_COL] == selected_gakku]
-            .drop(columns="geometry")
-            .iloc[0]
-            .to_dict()
-            if (gdf[gdf[GAKKU_COL] == selected_gakku].shape[0] > 0)
-            else {}
-        )
+        if GAKKU_COL in gdf.columns and selected_gakku:
+            pop_latest_row = (
+                gdf[gdf[GAKKU_COL] == selected_gakku]
+                .drop(columns="geometry")
+                .iloc[0]
+                .to_dict()
+                if (gdf[gdf[GAKKU_COL] == selected_gakku].shape[0] > 0)
+                else {}
+            )
+        else:
+            pop_latest_row = {}
 
         # Show key numbers - use pop_by_gakku_year.csv if available
         display_data = {}

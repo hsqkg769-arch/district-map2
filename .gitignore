@@ -1,8 +1,36 @@
-﻿.venv/
+﻿# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# 一時ファイル
 *.pptx
 ~$*.pptx
 *.qmd
+~$*.qmd
+
+# 特定のテキストファイルのみ無視
 github.txt
-*.txt
-__pycache__/
-*.pyc
+folder_structure.txt
+データ分析流れ.txt
+構成.txt
+
+# Streamlit
+.streamlit/secrets.toml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ログファイル
+*.log

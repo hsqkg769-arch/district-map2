@@ -285,7 +285,40 @@ if show_bear and not bear_pt.empty:
             color=color,
             fill=True,
             fill_color=color,
-            fill_opacity=0.7,
+            fill_opacity=0.85,
+            popup=folium.Popup(
+                f"<b>Bear</b><br>year: {y}<br>gakku: {gakku}<br>{memo}",
+                max_width=280,
+            ),
+        ).add_to(m)
+
+# Land price: triangle (if we have point geometry)
+if show_land and (land_pt is not None) and (not land_pt.empty):
+    # choose key for series
+    key_col = None
+    for cand in ["ChikaID", "chikaid", "ID"]:
+        if cand in land_pt.columns:
+            key_col = cand
+            break
+
+    for _, r in land_pt.iterrows():
+        key = r.get(key_col, "")
+        gakku = r.get("gakku", "")
+        shozai = r.get("Shozai", r.get("shozai", ""))
+
+        folium.RegularPolygonMarker(
+            latlon = geom_to_latlon(r.geometry)
+        if latlon is None:
+         continue
+
+location=list(latlon),
+
+            number_of_sides=3,    # triangle
+            radius=6,
+            color="#f1c40f",
+            fill=True,
+            fill_color="#f1c40f",
+            fill_opacity=0.95,
             popup=folium.Popup(
                 f"<b>Year:</b> {year}<br><b>Gakku:</b> {gakku}<br><b>Memo:</b> {memo}",
                 max_width=300,

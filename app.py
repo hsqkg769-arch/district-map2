@@ -610,16 +610,25 @@ def load_all():
     gdf2 = gdf.copy()
 
     # add latest pop columns
-    gdf2 = gdf2.merge(
-        df_pop_latest[[GAKKU_COL] + [c for c in ["pop_total", "pop_0_11", "pop_12_18", "pop_19_64", "pop_65_over"] if c in df_pop_latest.columns]],
-        on=GAKKU_COL,
-        how="left"
-    )
+    if not df_pop_latest.empty and GAKKU_COL in df_pop_latest.columns and GAKKU_COL in gdf2.columns:
+        pop_cols = [c for c in ["pop_total", "pop_0_11", "pop_12_18", "pop_19_64", "pop_65_over"] if c in df_pop_latest.columns]
+        if pop_cols:
+            gdf2 = gdf2.merge(
+                df_pop_latest[[GAKKU_COL] + pop_cols],
+                on=GAKKU_COL,
+                how="left"
+            )
 
     # add trends
-    gdf2 = gdf2.merge(df_pop_trend, on=GAKKU_COL, how="left")
-    gdf2 = gdf2.merge(df_students_trend, on=GAKKU_COL, how="left")
-    gdf2 = gdf2.merge(bear_risk[[GAKKU_COL, "bear_risk_0_100", "bear_per_1000_kids", "bear_3y"]], on=GAKKU_COL, how="left")
+    if GAKKU_COL in gdf2.columns:
+        if not df_pop_trend.empty and GAKKU_COL in df_pop_trend.columns:
+            gdf2 = gdf2.merge(df_pop_trend, on=GAKKU_COL, how="left")
+        if not df_students_trend.empty and GAKKU_COL in df_students_trend.columns:
+            gdf2 = gdf2.merge(df_students_trend, on=GAKKU_COL, how="left")
+        if not bear_risk.empty and GAKKU_COL in bear_risk.columns:
+            bear_cols = [c for c in ["bear_risk_0_100", "bear_per_1000_kids", "bear_3y"] if c in bear_risk.columns]
+            if bear_cols:
+                gdf2 = gdf2.merge(bear_risk[[GAKKU_COL] + bear_cols], on=GAKKU_COL, how="left")
 
     # fill numeric
     for c in ["bear_risk_0_100", "bear_per_1000_kids", "bear_3y"]:

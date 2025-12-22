@@ -885,12 +885,16 @@ if color_by in ["総人口（2025）", "将来推計（2030 0–11）"]:
             }
 
 # --- tooltip (keep simple, English)
-# Use gdf2 (merged data) for tooltip fields, but only include columns that exist
+# Only include columns that exist in gdf and are not geometry
 tooltip_fields = []
 tooltip_aliases = []
-if GAKKU_COL in gdf.columns:
+# Get actual columns from gdf (excluding geometry)
+available_cols = [col for col in gdf.columns if col != "geometry"]
+
+if GAKKU_COL in available_cols:
     tooltip_fields.append(GAKKU_COL)
     tooltip_aliases.append("gakku")
+
 # Only add columns that actually exist in gdf
 for f, a in [
     ("pop_total", "pop_total"),
@@ -901,13 +905,18 @@ for f, a in [
     ("bear_risk_0_100", "bear_risk_0_100"),
     ("pop_2030", "pop_2030"),
 ]:
-    if f in gdf.columns:
+    if f in available_cols:
         tooltip_fields.append(f)
         tooltip_aliases.append(a)
 
 # tooltip_fieldsが空でない場合のみtooltipを作成
-if tooltip_fields:
-    tooltip = folium.GeoJsonTooltip(fields=tooltip_fields, aliases=tooltip_aliases)
+# Also ensure fields and aliases have the same length
+if tooltip_fields and len(tooltip_fields) == len(tooltip_aliases):
+    try:
+        tooltip = folium.GeoJsonTooltip(fields=tooltip_fields, aliases=tooltip_aliases)
+    except Exception as e:
+        st.warning(f"Tooltip creation failed: {e}")
+        tooltip = None
 else:
     tooltip = None
 

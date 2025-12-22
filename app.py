@@ -656,13 +656,14 @@ def load_all():
             df_pop_2030 = None
 
     # merge 2030 projection to gdf2
-    if df_pop_2030 is not None and GAKKU_COL in df_pop_2030.columns:
+    if df_pop_2030 is not None and not df_pop_2030.empty and GAKKU_COL in df_pop_2030.columns and GAKKU_COL in gdf2.columns:
         merge_cols = [GAKKU_COL]
         # 総人口と0-11人口の両方をマージ
         for c in ["pop_2030", "pop_2025", "pop_0_11_2025", "pop_0_11_2030", "change_2025_2030", "trend_slope"]:
             if c in df_pop_2030.columns:
                 merge_cols.append(c)
-        gdf2 = gdf2.merge(df_pop_2030[merge_cols], on=GAKKU_COL, how="left")
+        if len(merge_cols) > 1:  # GAKKU_COL以外に列がある場合のみマージ
+            gdf2 = gdf2.merge(df_pop_2030[merge_cols], on=GAKKU_COL, how="left")
 
     # --- load land price long format if exists
     if os.path.exists(LAND_PRICE_LONG_CSV) and not df_land_long_map:

@@ -921,16 +921,16 @@ else:
     tooltip = None
 
 # --- add district polygons (NO highlight_function -> avoid "selection rectangle" feel)
-if show_district:
-    folium_kwargs = {
-        "data": gdf,
-        "name": "districts",
-        "style_function": style_polygon,
-        "highlight_function": None,  # important
-    }
-    if tooltip is not None:
-        folium_kwargs["tooltip"] = tooltip
-    folium.GeoJson(**folium_kwargs).add_to(m)
+if show_district and not gdf.empty:
+    # Temporarily disable tooltip to avoid AssertionError
+    # tooltip will be re-enabled once we confirm all fields exist in GeoJSON properties
+    folium.GeoJson(
+        gdf,
+        name="districts",
+        style_function=style_polygon,
+        highlight_function=None,  # important
+        # tooltip=tooltip,  # Temporarily disabled
+    ).add_to(m)
 
 # ======================================================
 # Points: schools (square), bears (small circle), land (triangle)

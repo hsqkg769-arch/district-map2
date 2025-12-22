@@ -957,7 +957,7 @@ if show_school and (school_pt is not None) and (not school_pt.empty):
             continue
 
         name = r.get("school_name", r.get("school_nam", "school"))
-        gakku = r.get("gakku", "")
+        gakku = r.get(GAKKU_COL, r.get("gakku", ""))
         sid = r.get("ID", "")
         students = r.get(STUDENTS_COL, None)
         classes = r.get(CLASSES_COL, None)
@@ -1013,7 +1013,7 @@ if show_bear and (bear_pt is not None) and (not bear_pt.empty):
 
         color = bear_color_map.get(year, "black")
         memo = r.get("memo1", r.get("memo", ""))
-        gakku = r.get("gakku", "")
+        gakku = r.get(GAKKU_COL, r.get("gakku", ""))
         
         # Get additional attributes if available
         attributes = []
@@ -1056,7 +1056,7 @@ if show_land and (land_pt is not None) and (not land_pt.empty):
             continue
 
         key = r.get(key_col, "") if key_col else ""
-        gakku = r.get("gakku", "")
+        gakku = r.get(GAKKU_COL, r.get("gakku", ""))
 
         # Get latest price from series for reference price calculation
         latest_price_per_m2 = None
@@ -1220,8 +1220,8 @@ with left:
         if show_land and df_land_long_map:
             # try get a key in same gakku
             key_candidates = []
-            if land_pt is not None and not land_pt.empty and "gakku" in land_pt.columns:
-                sub = land_pt[land_pt["gakku"] == selected_gakku]
+            if land_pt is not None and not land_pt.empty and GAKKU_COL in land_pt.columns:
+                sub = land_pt[land_pt[GAKKU_COL] == selected_gakku]
                 if not sub.empty:
                     for cand in ["ChikaID", "chikaid", "ID"]:
                         if cand in sub.columns:

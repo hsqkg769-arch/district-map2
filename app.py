@@ -885,8 +885,11 @@ if color_by in ["総人口（2025）", "将来推計（2030 0–11）"]:
             }
 
 # --- tooltip (keep simple, English)
-tooltip_fields = [GAKKU_COL] if GAKKU_COL in gdf.columns else []
-tooltip_aliases = ["gakku"]
+tooltip_fields = []
+tooltip_aliases = []
+if GAKKU_COL in gdf.columns:
+    tooltip_fields.append(GAKKU_COL)
+    tooltip_aliases.append("gakku")
 for f, a in [
     ("pop_total", "pop_total"),
     ("pop_0_11", "pop_0_11"),
@@ -900,17 +903,23 @@ for f, a in [
         tooltip_fields.append(f)
         tooltip_aliases.append(a)
 
-tooltip = folium.GeoJsonTooltip(fields=tooltip_fields, aliases=tooltip_aliases)
+# tooltip_fieldsが空でない場合のみtooltipを作成
+if tooltip_fields:
+    tooltip = folium.GeoJsonTooltip(fields=tooltip_fields, aliases=tooltip_aliases)
+else:
+    tooltip = None
 
-# --- add district polygons (NO highlight_function -> avoid “selection rectangle” feel)
+# --- add district polygons (NO highlight_function -> avoid "selection rectangle" feel)
 if show_district:
-    folium.GeoJson(
-        gdf,
-        name="districts",
-        style_function=style_polygon,
-        tooltip=tooltip,
-        highlight_function=None,  # important
-    ).add_to(m)
+    folium_kwargs = {
+        "data": gdf,
+        "name": "districts",
+        "style_function": style_polygon,
+        "highlight_function": None,  # important
+    }
+    if tooltip is not None:
+        folium_kwargs["tooltip"] = tooltip
+    folium.GeoJson(**folium_kwargs).add_to(m)
 
 # ======================================================
 # Points: schools (square), bears (small circle), land (triangle)

@@ -885,17 +885,8 @@ if color_by in ["総人口（2025）", "将来推計（2030 0–11）"]:
             }
 
 # --- tooltip (keep simple, English)
-# Only include columns that exist in gdf and are not geometry
-tooltip_fields = []
-tooltip_aliases = []
-# Get actual columns from gdf (excluding geometry)
-available_cols = [col for col in gdf.columns if col != "geometry"]
-
-if GAKKU_COL in available_cols:
-    tooltip_fields.append(GAKKU_COL)
-    tooltip_aliases.append("gakku")
-
-# Only add columns that actually exist in gdf
+tooltip_fields = [GAKKU_COL]
+tooltip_aliases = ["gakku"]
 for f, a in [
     ("pop_total", "pop_total"),
     ("pop_0_11", "pop_0_11"),
@@ -905,31 +896,20 @@ for f, a in [
     ("bear_risk_0_100", "bear_risk_0_100"),
     ("pop_2030", "pop_2030"),
 ]:
-    if f in available_cols:
+    if f in gdf.columns:
         tooltip_fields.append(f)
         tooltip_aliases.append(a)
 
-# tooltip_fieldsが空でない場合のみtooltipを作成
-# Also ensure fields and aliases have the same length
-if tooltip_fields and len(tooltip_fields) == len(tooltip_aliases):
-    try:
-        tooltip = folium.GeoJsonTooltip(fields=tooltip_fields, aliases=tooltip_aliases)
-    except Exception as e:
-        st.warning(f"Tooltip creation failed: {e}")
-        tooltip = None
-else:
-    tooltip = None
+tooltip = folium.GeoJsonTooltip(fields=tooltip_fields, aliases=tooltip_aliases)
 
 # --- add district polygons (NO highlight_function -> avoid "selection rectangle" feel)
-if show_district and not gdf.empty:
-    # Temporarily disable tooltip to avoid AssertionError
-    # tooltip will be re-enabled once we confirm all fields exist in GeoJSON properties
+if show_district:
     folium.GeoJson(
         gdf,
         name="districts",
         style_function=style_polygon,
+        tooltip=tooltip,
         highlight_function=None,  # important
-        # tooltip=tooltip,  # Temporarily disabled
     ).add_to(m)
 
 # ======================================================

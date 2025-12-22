@@ -1,5 +1,2 @@
 libgdal-dev
 libproj-dev
-unixodbc-common
-libodbc2
-libodbcinst2

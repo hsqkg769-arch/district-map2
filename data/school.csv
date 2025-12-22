@@ -1,4 +1,4 @@
-﻿ID,gakku,fiscal year,school_name,teachers,classes,enroll_total,enroll_grade_1,enroll_grade_2,enroll_grade_3,enroll_grade_4,enroll_grade_5,enroll_grade_6
+﻿ID,gakku,fiscalyear,school_name,teachers,classes,enroll_total,enroll_grade_1,enroll_grade_2,enroll_grade_3,enroll_grade_4,enroll_grade_5,enroll_grade_6
 101,Komatsu,2019,Komatsu school,15,10,194,25,30,35,25,44,35
 101,Komatsu,2020,Komatsu school,16,12,192,32,25,29,36,25,45
 101,Komatsu,2021,Komatsu school,15,11,179,28,33,27,30,36,25

@@ -1,0 +1,11 @@
+.\venv\Scripts\activate   # まだなら
+
+pip install streamlit folium streamlit-folium geopandas branca
+pip install streamlit streamlit-folium geopandas statsmodels folium
+pip install streamlit geopandas pyogrio plotly
+pip install plotly
+pip install plotly kaleido
+
+
+streamlit run app.py
+

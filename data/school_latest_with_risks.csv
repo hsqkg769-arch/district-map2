@@ -1,0 +1,39 @@
+﻿ID,gakku,fiscalyear,school_name,teachers,classes,enroll_total,enroll_grade_1,enroll_grade_2,enroll_grade_3,enroll_grade_4,enroll_grade_5,enroll_grade_6,student_risk,class_risk,integration_type
+101,Komatsu,2025,Komatsu school,13,8,169,28,24,21,33,27,36,Watch,Watch,Watch / Watch
+102,Kido,2025,Kido school,18,11,194,31,25,40,31,27,40,Watch,Watch,Watch / Watch
+103,Wani,2025,Wani school,23,16,377,61,55,56,72,65,68,Low,Low,Low / Low
+104,Ono,2025,Ono school,16,8,97,14,24,9,19,17,14,High,Watch,High / Watch
+105,Katsuragawa,2025,Katsuragawa school,9,6,34,2,4,7,7,10,4,High,High,High / High
+106,Ikadachi,2025,Ikadachi school,17,12,238,38,54,39,40,32,35,Low,Low,Low / Low
+107,Mano,2025,Mano school,26,16,405,59,63,70,70,73,70,Low,Low,Low / Low
+108,Mano Kita,2025,Mano Kita school,17,10,182,26,36,37,31,27,25,Watch,Watch,Watch / Watch
+109,Katata,2025,Katata school,56,36,1012,179,146,180,155,179,173,Low,Low,Low / Low
+110,Ogi,2025,Ogi school,10,6,48,5,6,6,10,10,11,High,High,High / High
+111,Ogi no Sato,2025,Ogi no Sato school,24,14,316,54,46,57,55,65,39,Low,Low,Low / Low
+112,Ogi no Sato Higashi,2025,Ogi no Sato Higashi school,31,22,495,65,90,86,80,80,94,Low,Low,Low / Low
+113,Ogoto,2025,Ogoto school,18,10,213,31,27,31,45,34,45,Low,Watch,Low / Watch
+114,Hiyoshidai,2025,Hiyoshidai school,14,9,130,22,20,18,26,20,24,Watch,Watch,Watch / Watch
+115,Sakamoto,2025,Sakamoto school,44,30,665,122,123,125,111,98,86,Low,Low,Low / Low
+116,Shimosakamoto,2025,Shimosakamoto school,42,32,878,152,141,145,150,150,140,Low,Low,Low / Low
+117,Karasaki,2025,Karasaki school,53,34,864,126,141,152,150,138,157,Low,Low,Low / Low
+118,Shiga,2025,Shiga school,43,31,765,148,125,119,131,123,119,Low,Low,Low / Low
+119,Yamanaka Hieidaira,2025,Yamanaka Hieidaira school,14,8,98,11,20,18,14,8,27,High,Watch,High / Watch
+120,Fujio,2025,Fujio school,12,7,147,26,23,27,30,15,26,Watch,Watch,Watch / Watch
+121,Nagara,2025,Nagara school,35,24,557,82,99,95,89,92,100,Low,Low,Low / Low
+122,Ousaka,2025,Ousaka school,30,19,424,60,69,64,73,78,80,Low,Low,Low / Low
+123,Chuo,2025,Chuo school,27,18,398,72,63,60,74,80,49,Low,Low,Low / Low
+124,Hirano,2025,Hirano school,58,38,962,146,146,158,164,159,189,Low,Low,Low / Low
+125,Zeze,2025,Zeze school,42,30,667,111,109,102,113,116,116,Low,Low,Low / Low
+126,Fujimi,2025,Fujimi school,34,23,487,75,85,90,82,85,70,Low,Low,Low / Low
+127,Seiran,2025,Seiran school,56,36,866,133,130,159,135,150,159,Low,Low,Low / Low
+128,Ishiyama,2025,Ishiyama school,31,21,432,68,65,76,77,60,86,Low,Low,Low / Low
+129,Nango,2025,Nango school,37,25,506,83,61,87,97,81,97,Low,Low,Low / Low
+130,Oishi,2025,Oishi school,17,10,178,18,29,24,36,41,30,Watch,Watch,Watch / Watch
+131,Tanoue,2025,Tanoue school,28,17,284,39,41,51,47,58,48,Low,Low,Low / Low
+132,Kamitanoue,2025,Kamitanoue school,13,8,79,15,12,8,13,13,18,High,Watch,High / Watch
+133,Aoyama,2025,Aoyama school,39,26,718,101,102,110,131,155,119,Low,Low,Low / Low
+134,Seta,2025,Seta school,62,41,1016,134,158,161,189,177,197,Low,Low,Low / Low
+135,Seta Minami,2025,Seta Minami school,44,32,751,118,119,121,134,134,125,Low,Low,Low / Low
+136,Seta Higashi,2025,Seta Higashi school,47,35,886,140,136,141,154,141,174,Low,Low,Low / Low
+137,Seta Kita,2025,Seta Kita school,59,40,1113,217,188,176,193,170,169,Low,Low,Low / Low
+999,other,2025,Fuzoku school,26,18,615,99,103,104,102,105,102,Low,Low,Low / Low
